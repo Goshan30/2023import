@@ -1,0 +1,32 @@
+import cv2
+from deepface import DeepFace
+
+def compare_faces(image_path, lenin_image_path):
+    try:
+        # Compare the two images using DeepFace
+        result = DeepFace.verify(image_path, lenin_image_path)
+
+        # Extract similarity percentage from the result
+        similarity_percentage = (1 - result['distance']) * 100
+        return similarity_percentage
+    except Exception as e:
+        print("Error during image comparison:", e)
+        return None
+
+def main():
+    # Path to the image of Lenin (this should be an image with his face)
+    lenin_image_path = "lenin_image.jpg"
+
+    # Get the path to the image of the person to compare with Lenin
+    image_path = input("Enter the path to the image for comparison with Lenin: ")
+
+    # Get the similarity percentage
+    similarity = compare_faces(image_path, lenin_image_path)
+
+    if similarity is not None:
+        print(f"Similarity percentage with Lenin: {similarity:.2f}%")
+    else:
+        print("Comparison failed.")
+
+if __name__ == "__main__":
+    main()
